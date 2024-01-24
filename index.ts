@@ -12,6 +12,10 @@ app.use(bodyParser.json());
 
 const urlDatabase: { [key: string]: string } = {};
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+});
+
 app.post('/shorten', (req, res) => {
   console.log(req.body)
     const originalUrl: string = req.body.url;

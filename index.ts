@@ -31,6 +31,8 @@ app.post("/shorten", async (req, res) => {
   const shortCode: string = req.body.shortcode;
   const password: string = req.body.password;
 
+  console.log("Got request for", shortCode, originalUrl);
+
   if (!originalUrl) {
     return res.status(400).json({ error: "URL is required" });
   }
@@ -41,6 +43,8 @@ app.post("/shorten", async (req, res) => {
     return res.status(403).json({ error: "Unauthorised" });
   }
 
+  console.log("Request successful");
+
   let result = await db
     .insert(urls)
     .values({ short_code: shortCode, redirect_url: originalUrl })
@@ -48,6 +52,8 @@ app.post("/shorten", async (req, res) => {
       target: urls.short_code,
       set: { redirect_url: originalUrl },
     });
+
+  console.log(result);
 
   if (result) {
     res.json({ originalUrl, shortCode });

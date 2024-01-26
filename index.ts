@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post("/shorten", (req, res) => {
+app.post("/shorten", async (req, res) => {
   const originalUrl: string = req.body.url;
   const shortCode: string = req.body.shortcode;
   const password: string = req.body.password;
@@ -41,14 +41,19 @@ app.post("/shorten", (req, res) => {
     return res.status(403).json({ error: "Unauthorised" });
   }
 
-  db.insert(urls)
+  let result = await db
+    .insert(urls)
     .values({ short_code: shortCode, redirect_url: originalUrl })
     .onConflictDoUpdate({
       target: urls.short_code,
       set: { redirect_url: originalUrl },
     });
 
-  res.json({ originalUrl, shortCode });
+  if (result) {
+    res.json({ originalUrl, shortCode });
+  } else {
+    res.status(500);
+  }
 });
 
 app.get("/s/:shortCode", async (req, res) => {

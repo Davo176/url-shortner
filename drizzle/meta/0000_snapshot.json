@@ -1,0 +1,45 @@
+{
+  "id": "d8d6bf4c-a4f4-4626-97f1-77fd79434c03",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "urls": {
+      "name": "urls",
+      "schema": "",
+      "columns": {
+        "shortCode": {
+          "name": "shortCode",
+          "type": "varchar(10)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "redirectUrl": {
+          "name": "redirectUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "shortCode_idx": {
+          "name": "shortCode_idx",
+          "columns": [
+            "shortCode"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
